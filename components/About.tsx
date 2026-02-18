@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { Award, Film, Code, Zap, Target, Users } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/lib/utils";
 
@@ -44,9 +44,6 @@ const highlights = [
 ];
 
 export default function About() {
-  const { scrollY } = useScroll();
-  const opacity = useScroll(scrollY, [0, 400], (value) => 1 - value / 400);
-
   return (
     <section id="about" className="section-padding relative overflow-hidden">
       {/* Animated background gradient */}
@@ -66,7 +63,7 @@ export default function About() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid lg:grid-cols-2 gap-16 items-center"
         >
-          {/* Left: Visual */}
+          {/* Left: Visual - Now with actual photo */}
           <motion.div variants={fadeInUp} className="relative">
             <motion.div
               whileHover={{ scale: 1.02, rotate: 1 }}
@@ -82,24 +79,23 @@ export default function About() {
                 className="absolute inset-0 bg-gradient-to-br from-accent-primary/30 via-transparent to-accent-secondary/30"
               />
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <motion.div
-                    animate={{
-                      scale: [0.9, 1, 0.9],
-                      rotate: [-5, 0, 5],
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-32 h-32 rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary mx-auto mb-4 flex items-center justify-center shadow-2xl"
-                  >
-                    <span className="text-5xl font-display font-bold text-white">
-                      PK
-                    </span>
-                  </motion.div>
-                  <p className="text-caption text-text-body">
-                    Portrait Coming Soon
-                  </p>
-                </div>
+              {/* Profile Image */}
+              <div className="absolute inset-0 flex items-center justify-center p-4">
+                <motion.div
+                  animate={{
+                    scale: [0.95, 1, 0.95],
+                    rotate: [-3, 0, 3],
+                  }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-full h-full rounded-2xl overflow-hidden"
+                >
+                  <img
+                    src="/profile.jpg"
+                    alt="Praveen Kumar"
+                    className="w-full h-full object-cover"
+                    style={{ filter: "brightness(1.05) contrast(1.1)" }}
+                  />
+                </motion.div>
               </div>
             </motion.div>
 
@@ -111,10 +107,10 @@ export default function About() {
             >
               <div className="text-center">
                 <motion.div
-                  animate={{ scale: [0.9, 1.1, 0.9] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="mb-2"
-                >
+                    animate={{ scale: [0.9, 1.1, 0.9] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="mb-2"
+                  >
                   <div className="text-5xl font-display font-bold gradient-text">
                     7+
                   </div>
@@ -177,7 +173,7 @@ export default function About() {
               {/* Animated background */}
               <motion.div
                 animate={{
-                  backgroundPosition: ["0% 0%", "200% 50%", "0% 0%", "200% 100%"],
+                    backgroundPosition: ["0% 0%", "200% 50%", "0% 0%", "200% 100%"],
                 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-gradient-to-r from-accent-secondary/20 via-accent-primary/20 to-transparent bg-[length:200%_200%] opacity-30"
@@ -186,8 +182,8 @@ export default function About() {
               <div className="relative z-10">
                 <h3 className="font-display font-bold text-h3 text-white mb-2 flex items-center gap-2">
                   <motion.span
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 1, ease: "easeInOut" }}
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                     className="inline-block px-2"
                   >
                     🚀

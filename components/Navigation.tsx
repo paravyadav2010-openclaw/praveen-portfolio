@@ -1,17 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const navLinks = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#work" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
-];
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Home, Briefcase, Zap, User, Mail } from 'lucide-react';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,16 +13,24 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = [
+    { name: 'Home', href: '#home', icon: <Home size={18} /> },
+    { name: 'About', href: '#about', icon: <User size={18} /> },
+    { name: 'Work', href: '#work', icon: <Briefcase size={18} /> },
+    { name: 'Skills', href: '#skills', icon: <Zap size={18} /> },
+    { name: 'Contact', href: '#contact', icon: <Mail size={18} /> },
+  ];
+
   const scrollToSection = (href: string) => {
+    setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -40,55 +39,82 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
-            ? "glass glass-border py-4 shadow-glass"
-            : "py-6 bg-transparent"
-        )}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={`
+          fixed top-0 left-0 right-0 z-50 transition-all duration-300
+          ${isScrolled ? 'glass-strong py-4' : 'py-6 bg-transparent'}
+        `}
       >
-        <div className="section-container flex items-center justify-between">
-          <a
-            href="#hero"
-            className="font-display font-bold text-2xl text-white hover:opacity-80 transition-opacity"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#hero");
-            }}
-          >
-            PK
-          </a>
+        <div className="section-container">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <motion.a
+              href="#home"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollToSection('#home')}
+              className="text-2xl font-bold"
+            >
+              <span className="gradient-text font-extrabold">PK</span>
+            </motion.a>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <motion.button
-                key={link.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.2 + index * 0.1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm font-medium text-text-body hover:text-white transition-colors relative group"
-              >
-                {link.name}
-                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-gold-400 group-hover:w-full transition-all duration-300" />
-              </motion.button>
-            ))}
+            {/* Desktop Nav Links */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="hidden md:flex items-center gap-1"
+            >
+              {navItems.map((item, index) => (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + index * 0.05 }}
+                  className="relative px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors group"
+                >
+                  {item.name}
+                  <motion.span
+                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300"
+                  />
+                </motion.a>
+              ))}
+            </motion.div>
+
+            {/* CTA Button (Desktop) */}
+            <motion.a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#contact');
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 }}
+              className="hidden md:inline-flex px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-semibold rounded-full hover:shadow-lg hover:shadow-purple-500/30 transition-all"
+            >
+              Get in Touch
+            </motion.a>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-purple-400 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="md:hidden p-2 text-white hover:text-accent-primary transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu size={28} />
-          </button>
         </div>
       </motion.nav>
 
@@ -100,66 +126,65 @@ export default function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
             />
             <motion.div
-              initial={{ x: "100%" }}
+              initial={{ x: '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 h-full w-[80%] max-w-sm bg-background-main glass-border z-50 md:hidden flex flex-col"
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-80 glass-strong z-50 md:hidden overflow-y-auto"
             >
-              {/* Mobile Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <span className="font-display font-bold text-2xl text-white">
-                  Menu
-                </span>
-                <button
+              <div className="p-6">
+                {/* Close Button */}
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-white hover:text-accent-primary transition-colors"
-                  aria-label="Close menu"
+                  className="mb-8 p-2 text-white hover:text-purple-400 transition-colors"
                 >
-                  <X size={28} />
-                </button>
-              </div>
+                  <X size={24} />
+                </motion.button>
 
-              {/* Mobile Menu Links */}
-              <nav className="flex-1 p-6">
-                {navLinks.map((link, index) => (
-                  <motion.button
-                    key={link.name}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: index * 0.1,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    onClick={() => scrollToSection(link.href)}
-                    className="w-full text-left py-4 text-2xl font-display font-bold text-text-body hover:text-white hover:translate-x-2 transition-all"
-                  >
-                    {link.name}
-                    <ChevronDown
-                      className="inline-block ml-2 rotate-[-90deg] opacity-50"
-                      size={20}
-                    />
-                  </motion.button>
-                ))}
-              </nav>
+                {/* Mobile Nav Links */}
+                <div className="space-y-2">
+                  {navItems.map((item, index) => (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(item.href);
+                      }}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ x: 5 }}
+                      className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all"
+                    >
+                      <span className="text-purple-400">{item.icon}</span>
+                      <span className="font-medium">{item.name}</span>
+                    </motion.a>
+                  ))}
+                </div>
 
-              {/* Mobile Menu Footer */}
-              <div className="p-6 border-t border-white/10">
-                <a
+                {/* Mobile CTA */}
+                <motion.a
                   href="#contact"
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection("#contact");
+                    scrollToSection('#contact');
                   }}
-                  className="btn-primary block text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-8 block w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-2xl text-center"
                 >
                   Get in Touch
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </>

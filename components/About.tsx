@@ -1,241 +1,276 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Award, Film, Code, Zap, Target, Users } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Briefcase, Award, Target, Zap, Calendar, CheckCircle } from 'lucide-react';
+import AnimatedSection from './AnimatedSection';
+import StatCounter from './StatCounter';
+import GradientText from './GradientText';
 
-const highlights = [
+const timeline = [
   {
-    icon: Award,
-    title: "7+ Years at Weta Digital",
-    description: "Senior Rotoscope Artist contributing to major film productions",
-    color: "text-accent-primary",
+    year: '2024',
+    title: 'Senior Rotoscope Artist',
+    company: 'Weta FX',
+    description: 'Leading team on major film projects, implementing pipeline improvements and mentoring junior artists.',
+    icon: <Award className="w-6 h-6" />,
   },
   {
-    icon: Film,
-    title: "Hollywood Blockbusters",
-    description: "Avatar, Marvel films, and major feature productions",
-    color: "text-accent-secondary",
+    year: '2021',
+    title: 'Rotoscope Artist',
+    company: 'Weta FX',
+    description: 'Contributed to blockbuster films including Avatar: The Way of Water and Dune: Part Two.',
+    icon: <Briefcase className="w-6 h-6" />,
   },
   {
-    icon: Code,
-    title: "Full-Stack Developer",
-    description: "Python, React, Next.js, and automation expertise",
-    color: "text-indigo-500",
+    year: '2019',
+    title: 'Junior Rotoscope Artist',
+    company: 'Method Studios',
+    description: 'Started career working on commercials and TV series, developed strong rotoscope fundamentals.',
+    icon: <Target className="w-6 h-6" />,
   },
   {
-    icon: Zap,
-    title: "VFX Professional",
-    description: "Nuke, Silhouette, Maya, Photoshop, After Effects",
-    color: "text-gold-500",
+    year: '2017',
+    title: 'Started Learning VFX',
+    company: 'Self-Directed',
+    description: 'Began journey into visual effects, learning Nuke and roto techniques through online courses.',
+    icon: <Zap className="w-6 h-6" />,
   },
-  {
-    icon: Target,
-    title: "Precision Artist",
-    description: "Keen eye for detail developed over a decade in VFX",
-    color: "text-teal-500",
-  },
-  {
-    icon: Users,
-    title: "Team Leadership",
-    description: "Mentored junior artists and collaborated across global VFX teams",
-    color: "text-rose-500",
-  },
+];
+
+const stats = [
+  { value: 7, label: 'Years Experience', suffix: '+' },
+  { value: 20, label: 'Major Films', suffix: '+' },
+  { value: 15, label: 'Awards Nominations', suffix: '' },
+  { value: 100, label: 'Team Size Led', suffix: '+' },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
-      {/* Animated background gradient */}
-      <motion.div
-        animate={{
-          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-accent-primary/5 via-transparent to-transparent pointer-events-none"
-      />
-
-      <div className="section-container">
+    <section id="about" className="section-padding relative">
+      {/* Background orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-2 gap-16 items-center"
-        >
-          {/* Left: Visual - Now with actual photo */}
-          <motion.div variants={fadeInUp} className="relative">
-            <motion.div
-              whileHover={{ scale: 1.02, rotate: 1 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="aspect-square rounded-3xl glass glass-border overflow-hidden relative"
-            >
-              {/* Animated gradient background */}
+          className="orb orb-cyan w-[500px] h-[500px]"
+          style={{ top: '20%', left: '-100px' }}
+          animate={{ opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 7, repeat: Infinity }}
+        />
+        <motion.div
+          className="orb orb-purple w-[400px] h-[400px]"
+          style={{ bottom: '10%', right: '-80px' }}
+          animate={{ opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 7, repeat: Infinity, delay: 3 }}
+        />
+      </div>
+
+      <div className="section-container relative z-10">
+        {/* Section Header */}
+        <AnimatedSection className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block px-4 py-2 text-sm font-semibold uppercase tracking-wider text-purple-400 bg-purple-500/10 rounded-full mb-6"
+          >
+            About Me
+          </motion.span>
+          <h2 className="heading-section text-white mb-4">
+            My <GradientText gradient="primary">Journey</GradientText>
+          </h2>
+          <p className="text-body text-gray-400 max-w-2xl mx-auto">
+            From passionate learner to industry professional, my path in visual effects and development
+          </p>
+        </AnimatedSection>
+
+        {/* Animated Stats */}
+        <AnimatedSection delay={0.1} className="mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
               <motion.div
-                animate={{
-                  backgroundPosition: ["0% 0%", "50% 50%", "100% 50%", "0% 0%"],
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 bg-gradient-to-br from-accent-primary/30 via-transparent to-accent-secondary/30"
-              />
-
-              {/* Profile Image */}
-              <div className="absolute inset-0 flex items-center justify-center p-4">
-                <motion.div
-                  animate={{
-                    scale: [0.95, 1, 0.95],
-                    rotate: [-3, 0, 3],
-                  }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-full h-full rounded-2xl overflow-hidden"
-                >
-                  <img
-                    src="/profile.jpg"
-                    alt="Praveen Kumar"
-                    className="w-full h-full object-cover"
-                    style={{ filter: "brightness(1.05) contrast(1.1)" }}
-                  />
-                </motion.div>
-              </div>
-            </motion.div>
-
-            {/* Floating stats */}
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-8 -right-8 p-6 rounded-2xl glass glass-border"
-            >
-              <div className="text-center">
-                <motion.div
-                    animate={{ scale: [0.9, 1.1, 0.9] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="mb-2"
-                  >
-                  <div className="text-5xl font-display font-bold gradient-text">
-                    7+
-                  </div>
-                  <div className="text-caption text-text-body">Years</div>
-                </motion.div>
-                <div className="flex items-center justify-center gap-2 text-caption text-text-body">
-                  <Zap className="w-4 h-4 text-accent-secondary" />
-                  <span>Of Excellence</span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Right: Content */}
-          <motion.div variants={staggerContainer} className="space-y-8">
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <motion.span
-                variants={fadeInUp}
-                className="inline-block px-4 py-2 rounded-pill bg-accent-secondary/10 text-accent-secondary text-sm font-medium"
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass-card p-6 text-center"
               >
-                About Me
-              </motion.span>
-              <h2 className="heading-section text-white">
-                Crafting Visual Stories That{" "}
-                <span className="gradient-text">Move Audiences</span>
-              </h2>
-            </motion.div>
-
-            <motion.p
-              variants={fadeInUp}
-              className="text-body text-text-body leading-relaxed"
-            >
-              With over a decade of experience in VFX industry, I have
-              established myself as a seasoned professional with extensive expertise
-              as a roto and paint artist. Working on major films like
-              <span className="text-white font-medium">Avatar, Marvel films,
-              X-Men, Gravity, and more</span> has shaped my
-              understanding of cinematic excellence. Regularly working on image planes
-              has developed a keen eye for detail and deep understanding of
-              compositing process.
-            </motion.p>
-
-            <motion.p
-              variants={fadeInUp}
-              className="text-body text-text-body leading-relaxed"
-            >
-              Beyond traditional VFX work, I bridge the gap between cinematic
-              artistry and modern technology. With advanced training in Comp
-              ATD techniques including keying, color grading, and compositing,
-              I bring a comprehensive skill set to every project. My passion
-              extends to web development with Python, React, and automation
-              tools that streamline workflows and solve real problems.
-            </motion.p>
-
-            {/* Melbourne Notice */}
-            <motion.div
-              variants={fadeInUp}
-              className="p-6 rounded-2xl bg-gradient-to-br from-accent-primary/10 to-accent-primary/5 border border-accent-primary/20 relative overflow-hidden"
-            >
-              {/* Animated background */}
-              <motion.div
-                animate={{
-                    backgroundPosition: ["0% 0%", "200% 50%", "0% 0%", "200% 100%"],
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 bg-gradient-to-r from-accent-secondary/20 via-accent-primary/20 to-transparent bg-[length:200%_200%] opacity-30"
-              />
-
-              <div className="relative z-10">
-                <h3 className="font-display font-bold text-h3 text-white mb-2 flex items-center gap-2">
-                  <motion.span
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                    className="inline-block px-2"
-                  >
-                    🚀
-                  </motion.span>
-                  Next Chapter: Melbourne
-                </h3>
-                <p className="text-body text-text-body">
-                  In March 2026, I'm relocating to Melbourne, Australia for a
-                  new role at Weta FX Melbourne. I'm excited to bring my
-                  decade of VFX expertise, recent Comp ATD training, and
-                  passion for visual storytelling to new challenges and collaborate with
-                  creative teams down under.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Highlights Grid */}
-            <motion.div
-              variants={fadeInUp}
-              className="grid grid-cols-2 gap-4"
-            >
-              {highlights.map((highlight, index) => (
                 <motion.div
-                  key={highlight.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="p-4 rounded-xl glass glass-border hover:bg-accent-primary/10 transition-transform cursor-default"
+                  transition={{ delay: index * 0.1 + 0.2 }}
+                  className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30"
                 >
+                  <Calendar className="w-8 h-8 text-white" />
+                </motion.div>
+                <StatCounter value={stat.value} suffix={stat.suffix} />
+                <p className="text-sm text-gray-400 mt-2">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        {/* Timeline */}
+        <AnimatedSection delay={0.2} className="mb-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              {/* Timeline line */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-cyan-500" />
+
+              {/* Timeline items */}
+              <div className="space-y-12">
+                {timeline.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.15 }}
+                    className={`relative flex items-center ${
+                      index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                    }`}
+                  >
+                    {/* Timeline dot */}
+                    <motion.div
+                      whileHover={{ scale: 1.2 }}
+                      className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50 z-10 pulse-glow"
+                    />
+
+                    {/* Content */}
+                    <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'} ml-16 md:ml-0`}>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="glass-card p-6 timeline-item relative"
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.15 + 0.2 }}
+                          className="w-12 h-12 mb-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl flex items-center justify-center"
+                        >
+                          <div className="text-purple-400">{item.icon}</div>
+                        </motion.div>
+                        <motion.span
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.15 + 0.3 }}
+                          className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-purple-400 bg-purple-500/10 rounded-full mb-2"
+                        >
+                          {item.year}
+                        </motion.span>
+                        <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
+                        <p className="text-sm text-purple-400 font-semibold mb-3">{item.company}</p>
+                        <p className="text-sm text-gray-400">{item.description}</p>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Skills & Capabilities */}
+        <AnimatedSection delay={0.3}>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left side - Photo placeholder with animated border */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-8"
+            >
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-500/20 to-pink-500/20 mb-6"
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
                     animate={{
-                      scale: [0.95, 1, 0.95],
+                      rotate: [0, 5, -5, 0],
+                      scale: [1, 1.05, 1],
                     }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2, ease: "easeInOut" }}
-                    className={`w-12 h-12 rounded-xl ${highlight.color} mb-3 flex items-center justify-center`}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    className="text-8xl opacity-50"
                   >
-                    <highlight.icon className="w-6 h-6" />
+                    👨‍💻
                   </motion.div>
-                  <h4 className="font-semibold text-white text-sub mb-1">
-                    {highlight.title}
-                  </h4>
-                  <p className="text-caption text-text-body">
-                    {highlight.description}
-                  </p>
-                </motion.div>
-              ))}
+                </div>
+
+                {/* Animated border */}
+                <motion.div
+                  className="absolute inset-0 border-2 border-transparent rounded-2xl"
+                  animate={{
+                    borderColor: [
+                      'rgba(102, 126, 234, 0.5)',
+                      'rgba(240, 147, 251, 0.5)',
+                      'rgba(79, 172, 254, 0.5)',
+                      'rgba(102, 126, 234, 0.5)',
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              </motion.div>
+
+              <h3 className="text-xl font-bold text-white mb-3">Praveen Kumar</h3>
+              <p className="text-gray-400 mb-4">
+                Passionate about creating stunning visual effects and building innovative digital solutions. I thrive at the intersection of art and technology.
+              </p>
             </motion.div>
-          </motion.div>
-        </motion.div>
+
+            {/* Right side - Capabilities */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-8"
+            >
+              <h3 className="heading-sub text-white mb-6">
+                <GradientText gradient="accent">Core Capabilities</GradientText>
+              </h3>
+
+              <div className="space-y-4">
+                {[
+                  'Advanced roto and paint techniques',
+                  'Team leadership and mentoring',
+                  'Pipeline automation and optimization',
+                  'Full-stack web development',
+                  'AI/ML integration in VFX workflows',
+                  'Cross-functional collaboration',
+                ].map((capability, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ x: 10 }}
+                    className="flex items-start gap-3"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 mt-0.5"
+                    >
+                      <CheckCircle className="w-4 h-4 text-white" />
+                    </motion.div>
+                    <p className="text-gray-300">{capability}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );

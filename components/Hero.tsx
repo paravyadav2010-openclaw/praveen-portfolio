@@ -1,234 +1,287 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Zap, Globe } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { ArrowDown, Github, Linkedin, Mail, Sparkles } from 'lucide-react';
+import MagneticButton from './MagneticButton';
 
 export default function Hero() {
+  // Animated text variants for letter-by-letter reveal
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
+  const name = "Praveen Kumar";
+  const letters = name.split('');
+
   return (
-    <section
-      id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
-    >
-      {/* Animated background with multiple gradient orbs */}
-      <div className="absolute inset-0 z-0">
-        {/* Primary moving gradient */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated gradient orbs background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Purple orb */}
         <motion.div
+          className="orb orb-purple w-[600px] h-[600px]"
+          style={{
+            top: '-200px',
+            left: '-200px',
+          }}
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.15, 0.25, 0.15],
+            x: [0, 100, 0],
+            y: [0, -100, 0],
+            scale: [1, 1.2, 1],
           }}
           transition={{
-            duration: 8,
+            duration: 20,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
-          className="absolute top-1/4 -left-40 w-96 h-96 bg-gradient-to-br from-accent-primary/20 via-transparent to-accent-secondary/10 rounded-full blur-3xl"
         />
 
-        {/* Secondary moving gradient */}
+        {/* Pink orb */}
         <motion.div
+          className="orb orb-pink w-[500px] h-[500px]"
+          style={{
+            bottom: '-150px',
+            right: '-150px',
+          }}
           animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.1, 0.2, 0.1],
+            x: [0, -80, 0],
+            y: [0, 80, 0],
+            scale: [1.2, 1, 1.2],
           }}
           transition={{
-            duration: 10,
+            duration: 18,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
             delay: 2,
           }}
-          className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-gradient-to-tl from-accent-secondary/15 via-transparent to-accent-primary/10 rounded-full blur-3xl"
         />
 
-        {/* Tertiary gradient */}
+        {/* Blue orb */}
         <motion.div
+          className="orb orb-blue w-[400px] h-[400px]"
+          style={{
+            top: '30%',
+            right: '10%',
+          }}
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.08, 0.12, 0.08],
+            x: [0, 60, 0],
+            y: [0, -60, 0],
+            scale: [1, 1.3, 1],
           }}
           transition={{
-            duration: 12,
+            duration: 15,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
             delay: 4,
           }}
-          className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-br from-indigo-500/10 via-transparent to-purple-500/10 rounded-full blur-2xl"
         />
 
-        {/* Animated particles effect */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-accent-primary/20"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
-              }}
-              animate={{
-                opacity: [0, 0.6, 0],
-                scale: [1, 1.5, 1],
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: i * 0.3,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
+        {/* Cyan orb */}
+        <motion.div
+          className="orb orb-cyan w-[350px] h-[350px]"
+          style={{
+            bottom: '20%',
+            left: '15%',
+          }}
+          animate={{
+            x: [0, -50, 0],
+            y: [0, 50, 0],
+            scale: [1.3, 1, 1.3],
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 6,
+          }}
+        />
       </div>
 
-      {/* Content */}
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-        className="section-container relative z-10 text-center"
-      >
-        {/* Status badge */}
+      {/* Main content */}
+      <div className="relative z-10 container mx-auto px-6 text-center">
         <motion.div
-          variants={fadeInUp}
-          className="inline-flex items-center gap-2 mb-8"
+          initial="hidden"
+          animate="visible"
+          className="max-w-5xl mx-auto"
         >
+          {/* Greeting badge */}
           <motion.div
-            animate={{
-              rotate: [0, 360],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <Globe className="w-4 h-4 text-accent-secondary" />
-          </motion.div>
-          <motion.div
-            variants={fadeInUp}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass glass-border text-sm"
-          >
-            <motion.span
-              animate={{
-                background: [
-                  "rgba(252, 211, 77, 0.1)",
-                  "rgba(252, 211, 77, 0.2)",
-                  "rgba(252, 211, 77, 0.1)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-2 h-2 rounded-full bg-accent-secondary"
-            />
-            <span className="text-accent-secondary font-medium">Available for Melbourne opportunities</span>
-          </motion.div>
-        </motion.div>
-
-        {/* Main heading */}
-        <motion.h1
-          variants={fadeInUp}
-          className="heading-display text-5xl md:text-hero mb-6"
-        >
-          <motion.span
-            animate={{
-              backgroundPosition: ["0% 0%", "50% 50%", "100% 50%", "0% 0%"],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            className="gradient-text inline-block bg-[length:400%_400%] bg-clip-text text-transparent"
-          >
-            Praveen Kumar
-          </motion.span>
-        </motion.h1>
-
-        <motion.p
-          variants={fadeInUp}
-          className="text-xl md:text-2xl text-text-body mb-8 max-w-3xl mx-auto leading-relaxed"
-        >
-          <span className="text-white font-medium">Senior Rotoscope Artist @ Weta Digital</span> •{" "}
-          <span className="text-accent-primary font-medium">7 Years of Excellence</span>
-        </motion.p>
-
-        {/* Subtitle with icon */}
-        <motion.p
-          variants={fadeInUp}
-          className="text-body text-text-body max-w-2xl mx-auto mb-12"
-        >
-          <span className="flex items-center justify-center gap-2 mb-4">
-            <Zap className="w-5 h-5 text-accent-secondary" />
-            <span className="text-lg">
-              Bridging the gap between{" "}
-              <span className="text-white font-medium">cinematic artistry</span>{" "}
-              and{" "}
-              <span className="text-white font-medium">technical innovation</span>
-            </span>
-          </span>
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          variants={fadeInUp}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.a
-            href="#work"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#work")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-            className="btn-primary inline-flex items-center gap-2 group relative overflow-hidden"
-          >
-            <motion.span
-              animate={{
-                backgroundPosition: ["0% 0%", "100% 0%", "0% 100%"],
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-gradient-to-r from-accent-primary via-indigo-500 to-purple-600 bg-[length:400%_400%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
-            <span className="relative z-10 flex items-center gap-2">
-              View My Work
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </motion.a>
-          <motion.a
-            href="#about"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#about")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-            className="btn-secondary inline-flex items-center gap-2"
-          >
-            Learn More
-            <Sparkles className="w-4 h-4" />
-          </motion.a>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-8"
           >
             <motion.div
-              animate={{ y: [0, 4, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.1 }}
-              className="w-1 h-3 bg-white/30 rounded-full mx-auto"
-            />
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 backdrop-blur-md rounded-full border border-white/10"
+              whileHover={{ scale: 1.05 }}
+            >
+              <Sparkles className="w-4 h-4 text-purple-400" />
+              <span className="text-sm font-medium text-gray-300">
+                Welcome to my creative universe
+              </span>
+            </motion.div>
+          </motion.div>
+
+          {/* Main heading with letter-by-letter animation */}
+          <motion.h1
+            className="heading-display text-white mb-6 flex justify-center"
+            initial="hidden"
+            animate="visible"
+          >
+            I'm{' '}
+            <span className="gradient-text ml-4 glow-text">
+              {letters.map((letter, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterVariants}
+                  transition={{
+                    delay: index * 0.08,
+                  }}
+                >
+                  {letter === ' ' ? '\u00A0' : letter}
+                </motion.span>
+              ))}
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8, duration: 0.8 }}
+            className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+          >
+            Senior <span className="text-purple-400 font-semibold glow-text">Rotoscope Artist</span> @ Weta FX
+            <br />
+            Bridging <span className="gradient-text">VFX</span> and{' '}
+            <span className="gradient-text" style={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Code</span>
+          </motion.p>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.0, duration: 0.8 }}
+            className="text-body text-gray-400 mb-12 max-w-2xl mx-auto"
+          >
+            Crafting cinematic magic through visual effects and building innovative digital solutions.
+            7+ years of experience transforming creative vision into reality.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.2, duration: 0.8 }}
+            className="flex flex-wrap gap-4 justify-center mb-16"
+          >
+            <MagneticButton
+              variant="primary"
+              className="btn-glow"
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              View My Work
+            </MagneticButton>
+            <MagneticButton
+              variant="secondary"
+              className="btn-glass"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Learn More
+            </MagneticButton>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.4, duration: 0.8 }}
+            className="flex justify-center gap-4"
+          >
+            {[
+              { icon: Github, href: 'https://github.com/TraderParav' },
+              { icon: Linkedin, href: 'https://linkedin.com/in/praveenkumarnz' },
+              { icon: Mail, href: 'mailto:praveenkumar.nz@gmail.com' },
+            ].map((social, index) => (
+              <motion.a
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 glass rounded-full border-glow group"
+              >
+                <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+              </motion.a>
+            ))}
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 scroll-indicator"
+        animate={{
+          y: [0, 10, 0],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      >
+        <ArrowDown className="text-white/60" size={24} />
       </motion.div>
+
+      {/* Decorative floating elements */}
+      <motion.div
+        className="absolute top-20 right-20 w-3 h-3 rounded-full bg-purple-500 opacity-30"
+        animate={{
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.div
+        className="absolute bottom-32 left-24 w-2 h-2 rounded-full bg-pink-500 opacity-40"
+        animate={{
+          y: [0, 40, 0],
+          x: [0, -20, 0],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 1,
+        }}
+      />
+      <motion.div
+        className="absolute top-1/3 left-16 w-2 h-2 rounded-full bg-cyan-500 opacity-30"
+        animate={{
+          y: [0, -25, 0],
+          x: [0, 15, 0],
+        }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 2,
+        }}
+      />
     </section>
   );
 }
